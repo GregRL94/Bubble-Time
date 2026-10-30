@@ -557,6 +557,7 @@ GameObject:
   - component: {fileID: 958855790}
   - component: {fileID: 958855789}
   - component: {fileID: 958855791}
+  - component: {fileID: 958855792}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -724,9 +725,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95461f100ab3aa54f9d313e792c32ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
-  _walkSpeed: 3
-  _crouchSpeed: 0
-  _maxFallSpeed: 20
+  <WalkSpeed>k__BackingField: 5
+  <CrouchSpeed>k__BackingField: 0
+  <MaxFallSpeed>k__BackingField: 20
   _groundCheck: {fileID: 577370249}
   _groundCheckSize: {x: 0.5, y: 0.05}
   _groundLayer:
@@ -756,12 +757,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c4294e102a4ad46b0e27ed3001cb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
-  jumpHeight: 3.5
-  timeToApex: 0.35
-  fallGravityMultiplier: 1.8
-  cutGravityMultiplier: 3
-  coyoteTime: 0.1
-  jumpBufferTime: 0.12
+  _jumpHeight: 3.5
+  _timeToApex: 0.35
+  _allowDoubleJump: 1
+  _maxJumps: 2
+  _fallGravityMultiplier: 1.8
+  _cutGravityMultiplier: 3
+  _coyoteTime: 0.1
+  _jumpBufferTime: 0.12
+--- !u!114 &958855792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958855784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98414a6a6d4e33042abf5e6e8ae50da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
+  _dashSpeedFactor: 10
+  _dashDuration: 0.1
+  _dashCooldown: 2
 --- !u!1 &1442097841
 GameObject:
   m_ObjectHideFlags: 0

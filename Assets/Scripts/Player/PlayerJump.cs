@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerJump : MonoBehaviour
+public class PlayerJump : MonoBehaviour, IPlayerMovementComponent
 {
     [Header("Jump")]
     [SerializeField] private float _jumpHeight = 3.5f;          // in world units
@@ -27,13 +26,59 @@ public class PlayerJump : MonoBehaviour
     private int _jumpCount;
     private bool jumpHeld;
 
-    public void Initialize(Rigidbody2D playerRigidBody2D)
+    public void Initialize(PlayerMovementController movementController)
     {
-        _targetRb2D = playerRigidBody2D;
+        _targetRb2D = movementController.PlayerRB2D;
         CalculateJump();
     }
 
-    // Derive gravity and jump speed from height + time, so you tune "feel" directly
+    /// <summary>
+    /// Updates the character's jump state and applies a jump velocity when jump conditions are met.
+    /// </summary>
+    /// <param name="grounded">Whether the character is currently grounded.</param>
+    public void UpdateJump(bool grounded)
+    {
+        if (!grounded && _allowDoubleJump && _jumpCount < _maxJumps && _bufferCounter > 0f)
+        {
+            _targetRb2D.linearVelocity = new Vector2(_targetRb2D.linearVelocity.x, _jumpVelocity);
+            _jumpCount++;
+            _bufferCounter = 0f;
+            return;
+        }
+
+        if (grounded) { _jumpCount = 0; }
+
+        _coyoteCounter = grounded ? _coyoteTime : _coyoteCounter - Time.deltaTime;
+        _bufferCounter -= Time.deltaTime;
+
+        if (_bufferCounter > 0f && _coyoteCounter > 0f && _jumpCount < _maxJumps)
+        {
+            _targetRb2D.linearVelocity = new Vector2(_targetRb2D.linearVelocity.x, _jumpVelocity);
+            _coyoteCounter = 0f;
+            _bufferCounter = 0f;
+        }
+    }
+
+    /// <summary>
+    /// Updates the target Rigidbody2D's gravity scale based on vertical velocity and jump input.
+    /// </summary>
+    /// <remarks>Applies increased gravity while falling, reduced gravity when the jump is released during
+    /// ascent, and the base gravity otherwise.</remarks>
+    public void UpdateGravity()
+    {
+        Vector2 v = _targetRb2D.linearVelocity;
+
+        if (v.y < 0f)
+            _targetRb2D.gravityScale = _baseGravity * _fallGravityMultiplier;   // snappier fall
+        else if (v.y > 0f && !jumpHeld)
+            _targetRb2D.gravityScale = _baseGravity * _cutGravityMultiplier;    // short hop when released early
+        else
+            _targetRb2D.gravityScale = _baseGravity;
+    }
+
+    /// <summary>
+    /// Calculates the gravity and jump velocity required to reach the configured jump height and time to apex.
+    /// </summary>
     private void CalculateJump()
     {
         float gravity = (2f * _jumpHeight) / (_timeToApex * _timeToApex);
@@ -53,28 +98,4 @@ public class PlayerJump : MonoBehaviour
         jumpHeld = false;
     }
 
-    public void UpdateJump(bool grounded)
-    {
-        _coyoteCounter = grounded ? _coyoteTime : _coyoteCounter - Time.deltaTime;
-        _bufferCounter -= Time.deltaTime;
-
-        if (_bufferCounter > 0f && _coyoteCounter > 0f)
-        {
-            _targetRb2D.linearVelocity = new Vector2(_targetRb2D.linearVelocity.x, _jumpVelocity);
-            _coyoteCounter = 0f;
-            _bufferCounter = 0f;
-        }
-    }
-
-    public void UpdateGravity()
-    {
-        Vector2 v = _targetRb2D.linearVelocity;
-
-        if (v.y < 0f)
-            _targetRb2D.gravityScale = _baseGravity * _fallGravityMultiplier;   // snappier fall
-        else if (v.y > 0f && !jumpHeld)
-            _targetRb2D.gravityScale = _baseGravity * _cutGravityMultiplier;    // short hop when released early
-        else
-            _targetRb2D.gravityScale = _baseGravity;
-    }
 }
