@@ -5,6 +5,7 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
     [Header("General")]
     [SerializeField] private GameObject _aimReticle;
     [SerializeField] private float _aimReticleSpeed = 3f;
+    [SerializeField] private bool _stabilized = true;
 
     [Header("Distance from player")]
     [SerializeField] private float _aimReticleMinDistance = 1f;
@@ -92,5 +93,10 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
     {
         _actionsController = actionsController;
         _reticleTransform = _aimReticle.transform;
+        if (_stabilized)
+        {
+            _reticleTransform.position = transform.position + (transform.right * _aimReticleMinDistance); // Positionne le viseur à une distance minimale du joueur.
+            _reticleTransform.SetParent(null); // Détache le viseur du joueur pour qu'il ne suive pas les mouvements du joueur.
+        }
     }
 }

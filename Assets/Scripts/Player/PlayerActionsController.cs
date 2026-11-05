@@ -3,12 +3,15 @@ using Unity.Cinemachine;
 using UnityEditor;
 using UnityEngine;
 
+/* TODO: Consider overall simplification by binding weapons directly to input events, eliminating the need for a centralized controller.
+ * OR by passing events from the input handler through the controller, and handling them in the individual components. */
+
 public class PlayerActionsController : MonoBehaviour
 {
-    [field:SerializeField] public Transform ShootingPoint { get; set; }
+    [SerializeField] private PlayerEnergyGun _playerEnergyGun;
     private PlayerInputHandler _inputHandler;
     private PlayerReticle _playerReticle;
-    private PlayerEnergyGun _playerEnergyGun;
+    private bool _subscridedToInputEvents;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,11 +22,8 @@ public class PlayerActionsController : MonoBehaviour
         {
             Debug.Log("Reticle component found and initialized.");
         }
-        if (TryGetActionComponent<PlayerEnergyGun>(out _playerEnergyGun))
-        {
-            Debug.Log("EnergyGun component found and initialized.");
-        }
         LockCursor();
+        Subscribe();
     }
 
     // Update is called once per frame
@@ -54,5 +54,28 @@ public class PlayerActionsController : MonoBehaviour
     {
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
+    }
+
+    private void Subscribe(bool subscribe = true)
+    {
+        if (subscribe)
+        {
+            if (_subscridedToInputEvents) return;
+            if (_playerEnergyGun != null)
+            {
+                PlayerInputHandler.OnAttackPressed += _playerEnergyGun.StartShooting;
+                PlayerInputHandler.OnAttackReleased += _playerEnergyGun.StopShooting;
+            }
+            _subscridedToInputEvents = subscribe;
+        }
+        else
+        {
+            if (_playerEnergyGun != null)
+            {
+                PlayerInputHandler.OnAttackPressed -= _playerEnergyGun.StartShooting;
+                PlayerInputHandler.OnAttackReleased -= _playerEnergyGun.StopShooting;
+            }
+            _subscridedToInputEvents = subscribe;
+        }
     }
 }
