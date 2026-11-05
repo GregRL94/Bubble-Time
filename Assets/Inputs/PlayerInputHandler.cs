@@ -12,6 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
     public static Action OnJumpPressed;
     public static Action OnJumpReleased;
     public static Action OnDashPressed;
+    public static Action<Vector2> OnLookDelta;
     public static Action<int> OnWeaponSwitch;
 
     public static PlayerInputHandler Instance { get; private set; }
@@ -185,6 +186,7 @@ public class PlayerInputHandler : MonoBehaviour
             _inputActions.Player.Jump.started += OnJumpInput;
             _inputActions.Player.Jump.canceled += OnJumpInput;
             _inputActions.Player.Dash.started += OnDashInput;
+            _inputActions.Player.Look.started += ctx => OnLookDelta?.Invoke(ctx.ReadValue<Vector2>());
             _inputActions.Player.Next.started += OnNextInput;
             _inputActions.Player.Previous.started += OnPreviousInput;
         }
@@ -198,6 +200,7 @@ public class PlayerInputHandler : MonoBehaviour
             _inputActions.Player.Jump.started -= OnJumpInput;
             _inputActions.Player.Jump.canceled -= OnJumpInput;
             _inputActions.Player.Dash.started -= OnDashInput;
+            _inputActions.Player.Look.started -= ctx => OnLookDelta?.Invoke(ctx.ReadValue<Vector2>());
             _inputActions.Player.Next.started -= OnNextInput;
             _inputActions.Player.Previous.started -= OnPreviousInput;
         }
