@@ -25,10 +25,25 @@ public class PlayerHealth : MonoBehaviour, IHit
         _currentLives--;
         if (_currentLives > 0)
         {
+            Debug.Log("Lost a life! Remaining lives: " + _currentLives);
             StartCoroutine(Die(_respawnTime));
             return;
         }
+        Debug.Log("No remaining lives! Game Over!");
         StartCoroutine(Die(_gameOverTime));
+    }
+
+    public void GainLife()
+    {
+        if (_currentLives < _maxLives)
+        {
+            _currentLives++;
+            Debug.Log("Gained a life! Current lives: " + _currentLives);
+        }
+        else
+        {
+            Debug.Log("Already at maximum lives!");
+        }
     }
 
     IEnumerator Die(float waitForSeconds)
@@ -40,10 +55,12 @@ public class PlayerHealth : MonoBehaviour, IHit
         yield return new WaitForSeconds(waitForSeconds);
         if (_currentLives > 0)
         {
+            Debug.Log("Respawn player");
             // TODO: GameManager Respawn Player
         }
         else
         {
+            Debug.Log("Show Game Over Screen");
             // TODO: GameManager Show GameOver Screen
         }
     }
