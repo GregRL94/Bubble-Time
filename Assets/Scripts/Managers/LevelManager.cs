@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour
         if (CurrentCheckpointIndex < Checkpoints.Length - 1)
         {
             CurrentCheckpointIndex++;
+            Debug.Log("Current checkpoint index: " + CurrentCheckpointIndex);
         }
     }
 

@@ -66,7 +66,7 @@ public class PlayerHealth : MonoBehaviour, IHit
         // TODO:Play Death Animation. Use body supparts from the object pooler to create a ragdoll effect. Use the RagdollSettings class to configure the ragdoll effect.
         // TODO:Play Death Sound
         yield return new WaitForSeconds(waitForSeconds);
-        if (_currentLives > 0)
+        if (_currentLives >= 0)
         {
             GameManager.Instance.RespawnPlayer();
         }
