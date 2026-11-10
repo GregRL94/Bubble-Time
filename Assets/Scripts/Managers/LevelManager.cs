@@ -29,12 +29,6 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.RegisterLevel(this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void NextCheckpoint()
     {
         if (CurrentCheckpointIndex < Checkpoints.Length - 1)
@@ -42,7 +36,6 @@ public class LevelManager : MonoBehaviour
             CurrentCheckpointIndex++;
         }
     }
-
 
     private void OnDestroy()
     {
