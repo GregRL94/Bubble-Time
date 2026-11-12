@@ -3,6 +3,7 @@ public class G_EnemyStateMachine
     public G_EnemyIdleState IdleState { get; private set; }
     public G_EnemyPatrolState PatrolState { get; private set; }
     public G_EnemyChaseState ChaseState { get; private set; }
+    public G_EnemyAlertState AlertState { get; private set; }
     public G_EnemyAttackState AttackState { get; private set; }
     public GroundEnemy2DBase Enemy { get; private set; }
     G_EnemyBaseState _currentState;
@@ -13,10 +14,11 @@ public class G_EnemyStateMachine
         IdleState = new G_EnemyIdleState();
         PatrolState = new G_EnemyPatrolState();
         ChaseState = new G_EnemyChaseState();
+        AlertState = new G_EnemyAlertState();
         AttackState = new G_EnemyAttackState();
         Enemy = enemy;
 
-        _currentState = Enemy.Waypoints.Length > 0 ? PatrolState : IdleState;
+        _currentState = Enemy.WaypointsSettings.Waypoints.Length > 0 ? PatrolState : IdleState;
         _currentState.EnterState(this);
     }
 

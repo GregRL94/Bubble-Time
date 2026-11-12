@@ -2,17 +2,27 @@ using UnityEngine;
 
 public class G_EnemyPatrolState: G_EnemyBaseState
 {
+    private WaypointsSettings _waypointsSettings;
     private float _patrolWaypointPauseTime;
     private float _minX, _maxX;
     private float _patrolTargetX;
+    private bool _isPatrolSet;
 
     public override void EnterState(G_EnemyStateMachine stateMachine)
     {
         Debug.Log("Entering Patrol State");
-        _enemy = stateMachine.Enemy;
-        _minX = Mathf.Min(_enemy.Waypoints[0].position.x, _enemy.Waypoints[1].position.x);
-        _maxX = Mathf.Max(_enemy.Waypoints[0].position.x, _enemy.Waypoints[1].position.x);
-        _patrolTargetX = _maxX;
+        if (!_isPatrolSet)
+        {
+            _enemy = stateMachine.Enemy;
+            _waypointsSettings = _enemy.WaypointsSettings;
+            _minX = Mathf.Min(_waypointsSettings.Waypoints[0].position.x, _waypointsSettings.Waypoints[1].position.x);
+            _maxX = Mathf.Max(_waypointsSettings.Waypoints[0].position.x, _waypointsSettings.Waypoints[1].position.x);
+
+            float closestX = Mathf.Abs(_enemy.transform.position.x - _minX) < Mathf.Abs(_enemy.transform.position.x - _maxX) ? _minX : _maxX;
+            _patrolTargetX = closestX;
+            _isPatrolSet = true;
+        }
+
         _enemy.MoveTowardsX(_patrolTargetX, _enemy.Data.PatrolSpeed);
     }
 
@@ -43,14 +53,14 @@ public class G_EnemyPatrolState: G_EnemyBaseState
     {
         float enemyAIPosX = _enemy.transform.position.x;
         float distanceX = Mathf.Abs(_patrolTargetX - enemyAIPosX);
-        float tolerance = _enemy.WaypointTolerance;
+        float tolerance = _waypointsSettings.WaypointTolerance;
 
         // Check if the current waypoint has been reached
         if (distanceX <= tolerance)
         {
-            Debug.Log("Checkoint reached. Pausing for " + _enemy.WaypointPauseTime + " seconds.");
+            Debug.Log("Checkoint reached. Pausing for " + _waypointsSettings.WaypointPauseTime + " seconds.");
             _patrolTargetX = Mathf.Approximately(_patrolTargetX, _maxX) ? _minX : _maxX;
-            _patrolWaypointPauseTime = _enemy.WaypointPauseTime;
+            _patrolWaypointPauseTime = _waypointsSettings.WaypointPauseTime;
             _enemy.Stop();
             return;
         }

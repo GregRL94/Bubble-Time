@@ -13,17 +13,12 @@ MonoBehaviour:
   m_Name: Test5Data
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   <MaxHealth>k__BackingField: 50
-  <BaseSpeed>k__BackingField: 5
+  <IdleCheckAroundRate>k__BackingField: 0.2
+  <BaseSpeed>k__BackingField: 2
   <PatrolSpeed>k__BackingField: 5
   <ChaseSpeed>k__BackingField: 10
+  <AlertTime>k__BackingField: 3
   <AttackRange>k__BackingField: 2
   <AttackVerticalTolerance>k__BackingField: 1
   <AttackSpeed>k__BackingField: 0.5
-  <PlayerLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 64
   <Damage>k__BackingField: 2
-  <DetectionRadius>k__BackingField: 5
-  <VisionObstacleMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 520
