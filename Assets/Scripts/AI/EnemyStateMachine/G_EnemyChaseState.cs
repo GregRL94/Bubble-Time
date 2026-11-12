@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class G_EnemyChaseState: G_EnemyBaseState
 {
-    private GroundEnemy2DBase _enemy;
-
     public override void EnterState(G_EnemyStateMachine stateMachine)
     {
         _enemy = stateMachine.Enemy;

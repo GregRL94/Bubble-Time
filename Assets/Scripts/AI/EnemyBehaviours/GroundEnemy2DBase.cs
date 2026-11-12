@@ -3,7 +3,7 @@ using UnityEngine;
 public class GroundEnemy2DBase : MonoBehaviour, IHit
 {
     [field: SerializeField, Tooltip("The enemy configuration data.")] public EnemyData Data { get; protected set; }
-    [field: SerializeField, Tooltip("The patrol waypoints for the enemy.")] public Transform[] Waypoints { get; set; }
+    [field: SerializeField, Tooltip("The patrol waypoints for the enemy.")] public Transform[] Waypoints { get; protected set; } = new Transform[2];
     [field: SerializeField, Tooltip("The tolerance for reaching waypoints.")] public float WaypointTolerance { get; private set; }
     [field: SerializeField, Tooltip("Pause after reaching a waypoint.")] public float WaypointPauseTime { get; private set; }
 
@@ -18,6 +18,11 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     protected float _targetVelocityX;
     protected int _facing;
 
+    private void Awake()
+    {
+        _rb2d = GetComponent<Rigidbody2D>();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,6 +35,12 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     {
         UpdateTimers();
         _stateMachine.UpdateStateMachine();
+    }
+
+    void FixedUpdate()
+    {
+        if (isDead) { return; }
+        _rb2d.linearVelocity = new Vector2(_targetVelocityX, _rb2d.linearVelocityY);
     }
 
     public bool TryDetectPlayer(out Transform playerTransform)

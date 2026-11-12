@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5361463bc3db2a349831047baac341b6, type: 3}
+  m_Name: Test5Data
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  <MaxHealth>k__BackingField: 50
+  <BaseSpeed>k__BackingField: 5
+  <PatrolSpeed>k__BackingField: 5
+  <ChaseSpeed>k__BackingField: 10
+  <AttackRange>k__BackingField: 2
+  <AttackVerticalTolerance>k__BackingField: 1
+  <AttackSpeed>k__BackingField: 0.5
+  <PlayerLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <Damage>k__BackingField: 2
+  <DetectionRadius>k__BackingField: 5
+  <VisionObstacleMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 520
