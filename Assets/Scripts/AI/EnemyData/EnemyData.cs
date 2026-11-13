@@ -9,7 +9,6 @@ public class EnemyData : ScriptableObject
     [field: SerializeField] public float PatrolSpeed { get; private set; }
     [field: SerializeField] public float ChaseSpeed { get; private set; }
     [field: SerializeField] public float AlertTime { get; private set; }
-    [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float AttackVerticalTolerance { get; private set; }
     [field: SerializeField] public float AttackSpeed { get; private set; }
     [field: SerializeField] public float Damage { get; private set; }

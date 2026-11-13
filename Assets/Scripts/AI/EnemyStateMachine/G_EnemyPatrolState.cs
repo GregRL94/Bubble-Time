@@ -58,7 +58,6 @@ public class G_EnemyPatrolState: G_EnemyBaseState
         // Check if the current waypoint has been reached
         if (distanceX <= tolerance)
         {
-            Debug.Log("Checkoint reached. Pausing for " + _waypointsSettings.WaypointPauseTime + " seconds.");
             _patrolTargetX = Mathf.Approximately(_patrolTargetX, _maxX) ? _minX : _maxX;
             _patrolWaypointPauseTime = _waypointsSettings.WaypointPauseTime;
             _enemy.Stop();

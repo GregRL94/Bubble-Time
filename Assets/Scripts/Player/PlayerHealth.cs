@@ -98,7 +98,5 @@ public class PlayerHealth : MonoBehaviour, IHit
         Subscribe(false);
     }
 
-    public void OnHit() { LooseLife(); }
-
-    public void OnHit(float _) { }
+    public void OnHit(float _) { LooseLife(); }
 }

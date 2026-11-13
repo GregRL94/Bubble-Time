@@ -37,7 +37,7 @@ public class G_EnemyChaseState: G_EnemyBaseState
 
         _enemy.FaceDirection(playerX);
 
-        if (distanceXToPlayer <= _enemy.Data.AttackRange && distanceYToPlayer <= _enemy.Data.AttackVerticalTolerance)
+        if (distanceXToPlayer <= _enemy.AttackRange && distanceYToPlayer <= _enemy.Data.AttackVerticalTolerance)
         {
             stateMachine.ChangeState(stateMachine.AttackState);
             return;

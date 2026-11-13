@@ -15,10 +15,9 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 50
   <IdleCheckAroundRate>k__BackingField: 0.2
   <BaseSpeed>k__BackingField: 2
-  <PatrolSpeed>k__BackingField: 5
-  <ChaseSpeed>k__BackingField: 10
+  <PatrolSpeed>k__BackingField: 3
+  <ChaseSpeed>k__BackingField: 6
   <AlertTime>k__BackingField: 3
-  <AttackRange>k__BackingField: 2
   <AttackVerticalTolerance>k__BackingField: 1
   <AttackSpeed>k__BackingField: 0.5
   <Damage>k__BackingField: 2

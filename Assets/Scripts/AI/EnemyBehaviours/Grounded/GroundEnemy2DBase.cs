@@ -25,24 +25,38 @@ public class DetectionSettings
     [field: SerializeField, Tooltip("The layer of the player.")] public LayerMask PlayerLayer { get; private set; }
     [field: SerializeField, Tooltip("Objects on these layers will block the enemy's vision.")] public LayerMask VisionObstacleMask { get; private set; }
 }
+
+[System.Serializable]
+public class AttackSettings
+{
+    [field: SerializeField, Tooltip("The point from which the attack is performed.")] public Transform AttackPoint { get; private set; }
+    [field: SerializeField, Tooltip("The layers that the attack can affect.")] public LayerMask AttacksAffectWhat { get; private set; }
+}
 #endregion Settings Classes
 
+/// <summary>
+/// Provides base behavior for a 2D ground enemy.
+/// </summary>
+/// <remarks>Manages enemy health, movement, detection, combat, facing direction, and state machine
+/// updates.</remarks>
 public class GroundEnemy2DBase : MonoBehaviour, IHit
 {
     #region Attributes
     [field: SerializeField, Tooltip("The enemy configuration data.")] public EnemyData Data { get; protected set; }
     public WaypointsSettings WaypointsSettings = new WaypointsSettings();
     public DetectionSettings DetectionSettings = new DetectionSettings();
+    public AttackSettings AttackSettings = new AttackSettings();
 
     public float CurrentHealth { get; protected set; }
-    public bool isAttacking { get; protected set; }
     public bool isDead { get; protected set; }
 
     protected G_EnemyStateMachine _stateMachine { get; set; }
     protected Rigidbody2D _rb2d;
+    protected Collider2D _collider2d;
     protected Animator _animator;
     protected Transform _player;
     protected float _nextAttackTimer;
+    public float AttackRange { get { return Mathf.Abs(AttackSettings.AttackPoint.localPosition.x); } }
     protected float _targetVelocityX;
     protected int _facing;
     #endregion Attributes
@@ -51,6 +65,7 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _collider2d = GetComponent<Collider2D>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -169,19 +184,8 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     #endregion Movement Methods
 
     #region Combat Methods
-    public virtual void TryAttack()
+    public virtual void PerformAttack()
     {
-        if (isAttacking || isDead) { return; }
-        if (_nextAttackTimer <= 0f)
-        {
-            Attack();
-            _nextAttackTimer = 1 / Data.AttackSpeed;
-        }
-    }
-
-    protected virtual void Attack()
-    {
-        isAttacking = true;
         Debug.Log("Attacking Player");
     }
 
@@ -202,6 +206,7 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
         isDead = true;
         _targetVelocityX = 0f;
         _rb2d.linearVelocity = new Vector2(0f, _rb2d.linearVelocityY);
+        _collider2d.enabled = false;
         Debug.Log(gameObject.name + " has died.");
         _Destroy();
     }
@@ -241,7 +246,5 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     {
         TakeDamage(damage);
     }
-
-    public void OnHit() { }
     #endregion IHit Implementation
 }

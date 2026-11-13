@@ -4,19 +4,16 @@ public class G_EnemyAlertState: G_EnemyBaseState
 {
     private float _alertTimer;
     private float _nextFlipTime;
-    private bool _isAlertTimerSet;
+    private bool _hasFlipped;
 
     public override void EnterState(G_EnemyStateMachine stateMachine)
     {
         Debug.Log("Entering Alert State");
-        if (!_isAlertTimerSet)
-        {
-            _enemy = stateMachine.Enemy;
-            _alertTimer = _enemy.Data.AlertTime;
-            _nextFlipTime = _alertTimer / 2f;
-            _isAlertTimerSet = true;
-        }
+        if (_enemy == null) { _enemy = stateMachine.Enemy; }
         _enemy.Stop();
+        _alertTimer = _enemy.Data.AlertTime;
+        _nextFlipTime = _alertTimer / 2f;
+        _hasFlipped = false;
     }
 
     public override void UpdateState(G_EnemyStateMachine stateMachine)
@@ -42,9 +39,10 @@ public class G_EnemyAlertState: G_EnemyBaseState
             return;
         }
 
-        if (_alertTimer <= _nextFlipTime)
+        if (_alertTimer <= _nextFlipTime && !_hasFlipped)
         {
             stateMachine.Enemy.FlipDirection();
+            _hasFlipped = true;
         }
     }
 

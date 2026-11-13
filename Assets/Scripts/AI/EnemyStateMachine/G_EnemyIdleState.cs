@@ -21,6 +21,7 @@ public class G_EnemyIdleState: G_EnemyBaseState
 
         if (MathUtils.DistanceX(_enemy.transform.position, _idlePoint) > _enemy.WaypointsSettings.WaypointTolerance)
         {
+            Debug.Log(_enemy.name + " is not at idle point. Moving towards idle point.");
             _enemy.MoveTowardsX(_idlePoint.x, _enemy.Data.PatrolSpeed);
             return;
         }
@@ -41,6 +42,7 @@ public class G_EnemyIdleState: G_EnemyBaseState
 
         if (_nextFlipTimer <= 0f)
         {
+            Debug.Log(_enemy.name + " Hmmm time to check around !");
             _enemy.FlipDirection();
             _nextFlipTimer = _flipTime;
         }
