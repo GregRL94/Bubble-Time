@@ -6,6 +6,7 @@ public class G_EnemyChaseState: G_EnemyBaseState
     private float _minBoundaryX;
     private float _maxBoundaryX;
     private bool _isChaseBoundariesSet;
+    private bool _isChasingPlayer;
 
     public override void EnterState(G_EnemyStateMachine stateMachine)
     {
@@ -19,6 +20,8 @@ public class G_EnemyChaseState: G_EnemyBaseState
             _maxBoundaryX = Mathf.Max(_waypointsSettings.Waypoints[0].position.x, _waypointsSettings.Waypoints[1].position.x);
             _isChaseBoundariesSet = true;
         }
+        _enemy.AnimatorAI.SetTrigger("Chase");
+        _isChasingPlayer = true;
     }
 
     public override void UpdateState(G_EnemyStateMachine stateMachine)
@@ -27,6 +30,7 @@ public class G_EnemyChaseState: G_EnemyBaseState
 
         if (!_enemy.TryDetectPlayer(out playerTransform))
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.AlertState);
             return;
         }
@@ -39,6 +43,7 @@ public class G_EnemyChaseState: G_EnemyBaseState
 
         if (distanceXToPlayer <= _enemy.AttackRange && distanceYToPlayer <= _enemy.Data.AttackVerticalTolerance)
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.AttackState);
             return;
         }
@@ -58,8 +63,17 @@ public class G_EnemyChaseState: G_EnemyBaseState
         if (Mathf.Abs(clampedPLayerX - _enemy.transform.position.x) <= _waypointsSettings.WaypointTolerance)
         {
             _enemy.Stop();
+            // STATE TRANSITION //
+            _enemy.AnimatorAI.SetTrigger("Alert");
+            _isChasingPlayer = false;
             return;
         }
         _enemy.MoveTowardsX(clampedPLayerX, _enemy.Data.ChaseSpeed);
+        if (!_isChasingPlayer)
+        {
+            // STATE TRANSITION //
+            _enemy.AnimatorAI.SetTrigger("Chase");
+            _isChasingPlayer = true;
+        }
     }
 }

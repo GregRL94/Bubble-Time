@@ -14,8 +14,16 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.5f, 0.05f);
     [SerializeField] private LayerMask _groundLayer;
 
+    [Header("Wall Check")]
+    [SerializeField] private Transform _wallCheck;
+    [SerializeField] private Vector2 _wallCheckSize = new Vector2(0.05f, 0.5f);
+    [SerializeField] private LayerMask _wallLayer;
+    // [SerializeField] private PhysicsMaterial2D _wallNoFrictionMaterial;
+
     public Rigidbody2D PlayerRB2D {get; private set;}
-    public bool IsGrounded { get; set; }
+    public Animator PlayerAnimator { get; private set; }
+    public bool IsGrounded { get; private set; }
+    public bool IsTouchingWall { get; private set; }
     public bool IsMoving { get; set; }
     public bool IsWalking { get; set; }
     public bool IsCrouching { get; set; }
@@ -28,13 +36,18 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerJump _playerJump;
     private PlayerDash _playerDash;
     private bool _subscribedToInputEvents;
+    private float _facing = 1f; // 1 for right, -1 for left
+
+    private void Awake()
+    {
+        _inputHandler = PlayerInputHandler.Instance;
+        PlayerRB2D = GetComponent<Rigidbody2D>();
+        PlayerAnimator = GetComponent<Animator>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _inputHandler = PlayerInputHandler.Instance;
-        PlayerRB2D = GetComponent<Rigidbody2D>();
-
         TryGetMovementComponent<PlayerJump>(out _playerJump);
         TryGetMovementComponent<PlayerDash>(out _playerDash);
         Subscribe();
@@ -47,6 +60,7 @@ public class PlayerMovementController : MonoBehaviour
         GroundCheck();
         _playerJump?.UpdateJump(IsGrounded);
         _playerDash?.UpdateDash();
+        UpdateAnimator();
     }
 
     private void FixedUpdate()
@@ -60,9 +74,27 @@ public class PlayerMovementController : MonoBehaviour
         IsGrounded = Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize, 0f, _groundLayer);
     }
 
+    private void WallCheck()
+    {
+        IsTouchingWall = Physics2D.OverlapBox(_wallCheck.position, _wallCheckSize, 0f, _wallLayer);
+    }
+
+    private void UpdateAnimator()
+    {
+        PlayerAnimator.SetBool("IsGrounded", IsGrounded);
+        PlayerAnimator.SetFloat("Speed", Mathf.Abs(PlayerRB2D.linearVelocityX));
+    }
+
     private float HandleXAxisMovement()
     {
         Vector2 movementInput = _inputHandler.GetMovementInput();
+        _facing = movementInput.x != 0 ? Mathf.Sign(movementInput.x) : _facing;
+        _wallCheck.localScale = new Vector3(_facing, 1f, 1f);
+        WallCheck();
+        if (IsTouchingWall && !IsGrounded)
+        {
+            return 0f; // Prevent horizontal movement when touching a wall in mid-air
+        }
         return movementInput.x * CurrentSpeed;
     }
 
@@ -141,5 +173,7 @@ public class PlayerMovementController : MonoBehaviour
         if (!IsGrounded) return;
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(_wallCheck.position, _wallCheckSize);
     }
 }

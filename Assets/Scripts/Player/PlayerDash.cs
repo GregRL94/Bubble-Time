@@ -44,6 +44,7 @@ public class PlayerDash : MonoBehaviour, IPlayerMovementComponent
     {
         float startTime = Time.time;
         _movementController.IsDashing = true;
+        _movementController.PlayerAnimator.SetTrigger("Dash");
 
         // AfterImageEffect
         _afterImageEffect?.PlayDashEffect(_dashDuration);

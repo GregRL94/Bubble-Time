@@ -27,6 +27,9 @@ public class G_EnemyIdleState: G_EnemyBaseState
         }
 
         _enemy.Stop();
+
+        // STATE TRANSITION //
+        _enemy.AnimatorAI.SetTrigger("Idle");
         _nextFlipTimer = _flipTime;
     }
 
@@ -36,6 +39,7 @@ public class G_EnemyIdleState: G_EnemyBaseState
 
         if (_enemy.TryDetectPlayer(out _))
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.ChaseState);
             return;
         }

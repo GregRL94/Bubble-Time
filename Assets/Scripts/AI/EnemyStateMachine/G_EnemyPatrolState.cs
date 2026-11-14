@@ -7,6 +7,7 @@ public class G_EnemyPatrolState: G_EnemyBaseState
     private float _minX, _maxX;
     private float _patrolTargetX;
     private bool _isPatrolSet;
+    private bool _isPatroling;
 
     public override void EnterState(G_EnemyStateMachine stateMachine)
     {
@@ -24,12 +25,17 @@ public class G_EnemyPatrolState: G_EnemyBaseState
         }
 
         _enemy.MoveTowardsX(_patrolTargetX, _enemy.Data.PatrolSpeed);
+
+        // STATE TRANSITION //
+        _enemy.AnimatorAI.SetTrigger("Patrol");
+        _isPatroling = true;
     }
 
     public override void UpdateState(G_EnemyStateMachine stateMachine)
     {
         if (_enemy.TryDetectPlayer(out _))
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.ChaseState);
             return;
         }
@@ -61,8 +67,18 @@ public class G_EnemyPatrolState: G_EnemyBaseState
             _patrolTargetX = Mathf.Approximately(_patrolTargetX, _maxX) ? _minX : _maxX;
             _patrolWaypointPauseTime = _waypointsSettings.WaypointPauseTime;
             _enemy.Stop();
+
+            // STATE TRANSITION //
+            _enemy.AnimatorAI.SetTrigger("Idle");
+            _isPatroling = false;
             return;
         }
         _enemy.MoveTowardsX(_patrolTargetX, _enemy.Data.PatrolSpeed);
+        if (!_isPatroling)
+        {
+            // STATE TRANSITION //
+            _enemy.AnimatorAI.SetTrigger("Patrol");
+            _isPatroling = true;
+        }
     }
 }

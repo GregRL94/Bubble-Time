@@ -48,12 +48,13 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     public AttackSettings AttackSettings = new AttackSettings();
 
     public float CurrentHealth { get; protected set; }
+    public bool isAttacking { get; protected set; }
     public bool isDead { get; protected set; }
 
     protected G_EnemyStateMachine _stateMachine { get; set; }
     protected Rigidbody2D _rb2d;
     protected Collider2D _collider2d;
-    protected Animator _animator;
+    public Animator AnimatorAI { get; protected set; }
     protected Transform _player;
     protected float _nextAttackTimer;
     public float AttackRange { get { return Mathf.Abs(AttackSettings.AttackPoint.localPosition.x); } }
@@ -66,6 +67,7 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _collider2d = GetComponent<Collider2D>();
+        AnimatorAI = GetComponent<Animator>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -184,9 +186,16 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
     #endregion Movement Methods
 
     #region Combat Methods
+    public virtual void TryAttack()
+    {
+        Debug.Log("Starting Attack !");
+        AnimatorAI.SetTrigger("Attack");
+        isAttacking = true;
+    }
+
     public virtual void PerformAttack()
     {
-        Debug.Log("Attacking Player");
+        isAttacking = false;
     }
 
     protected virtual void TakeDamage(float damage)
@@ -208,12 +217,12 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
         _rb2d.linearVelocity = new Vector2(0f, _rb2d.linearVelocityY);
         _collider2d.enabled = false;
         Debug.Log(gameObject.name + " has died.");
-        _Destroy();
+        AnimatorAI.SetTrigger("Die");
     }
     #endregion Combat Methods
 
     #region Utility Methods
-    protected virtual void _Destroy()
+    public virtual void _Destroy()
     {
         Destroy(gameObject);
     }
