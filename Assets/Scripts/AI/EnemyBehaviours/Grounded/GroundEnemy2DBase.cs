@@ -216,8 +216,9 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
         _targetVelocityX = 0f;
         _rb2d.linearVelocity = new Vector2(0f, _rb2d.linearVelocityY);
         _collider2d.enabled = false;
+        _rb2d.gravityScale = 0f;
+        _stateMachine.ChangeState(_stateMachine.DeadState);
         Debug.Log(gameObject.name + " has died.");
-        AnimatorAI.SetTrigger("Die");
     }
     #endregion Combat Methods
 

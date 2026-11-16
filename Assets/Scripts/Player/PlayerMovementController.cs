@@ -40,7 +40,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Awake()
     {
-        _inputHandler = PlayerInputHandler.Instance;
         PlayerRB2D = GetComponent<Rigidbody2D>();
         PlayerAnimator = GetComponent<Animator>();
     }
@@ -48,6 +47,7 @@ public class PlayerMovementController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _inputHandler = PlayerInputHandler.Instance;
         TryGetMovementComponent<PlayerJump>(out _playerJump);
         TryGetMovementComponent<PlayerDash>(out _playerDash);
         Subscribe();
@@ -82,14 +82,15 @@ public class PlayerMovementController : MonoBehaviour
     private void UpdateAnimator()
     {
         PlayerAnimator.SetBool("IsGrounded", IsGrounded);
-        PlayerAnimator.SetFloat("Speed", Mathf.Abs(PlayerRB2D.linearVelocityX));
+        PlayerAnimator.SetFloat("SpeedX", Mathf.Abs(PlayerRB2D.linearVelocityX));
+        PlayerAnimator.SetFloat("SpeedY", PlayerRB2D.linearVelocityY);
     }
 
     private float HandleXAxisMovement()
     {
         Vector2 movementInput = _inputHandler.GetMovementInput();
         _facing = movementInput.x != 0 ? Mathf.Sign(movementInput.x) : _facing;
-        _wallCheck.localScale = new Vector3(_facing, 1f, 1f);
+        transform.localScale = new Vector3(_facing, 1f, 1f); // Flip the player sprite based on movement direction
         WallCheck();
         if (IsTouchingWall && !IsGrounded)
         {
@@ -101,6 +102,10 @@ public class PlayerMovementController : MonoBehaviour
     private float HandleYAxisMovement()
     {
         float velocity_Y = Mathf.Clamp(PlayerRB2D.linearVelocityY, -MaxFallSpeed, float.MaxValue);
+        if (IsDashing)
+        {
+            velocity_Y = 0f; // Prevent vertical movement during dash
+        }
         return velocity_Y;
     }
 
@@ -170,10 +175,16 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!IsGrounded) return;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(_wallCheck.position, _wallCheckSize);
+        if (IsGrounded)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(_groundCheck.position, _groundCheckSize);
+        }
+
+        if (IsTouchingWall)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireCube(_wallCheck.position, _wallCheckSize);
+        }
     }
 }

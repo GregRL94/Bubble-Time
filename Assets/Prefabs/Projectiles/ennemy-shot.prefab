@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5459227914076387012}
   - component: {fileID: 792184798901408852}
   - component: {fileID: 5583663832224344721}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ennemy-shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,8 +80,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 908862493
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 95cbe04768bc9764db8aafb0b756e8e9, type: 3}

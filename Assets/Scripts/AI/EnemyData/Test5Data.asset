@@ -16,7 +16,7 @@ MonoBehaviour:
   <IdleCheckAroundRate>k__BackingField: 0.2
   <BaseSpeed>k__BackingField: 2
   <PatrolSpeed>k__BackingField: 3
-  <ChaseSpeed>k__BackingField: 6
+  <ChaseSpeed>k__BackingField: 5
   <AlertTime>k__BackingField: 3
   <AttackVerticalTolerance>k__BackingField: 1
   <AttackSpeed>k__BackingField: 0.5
