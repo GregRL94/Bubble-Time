@@ -14,7 +14,7 @@ public class PlayerDash : MonoBehaviour, IPlayerMovementComponent
     private float _dashCooldownTimer;
 
 
-    public void Initialize(PlayerMovementController movementController)        
+    public void Initialize(PlayerMovementController movementController)
     {
         _movementController = movementController;
         TryGetComponent<AfterImageEffect>(out _afterImageEffect);
@@ -44,11 +44,12 @@ public class PlayerDash : MonoBehaviour, IPlayerMovementComponent
     {
         float startTime = Time.time;
         _movementController.IsDashing = true;
+        _movementController.PlayerAnimator.SetTrigger("Dash");
 
         // AfterImageEffect
-        _afterImageEffect?.PlayDashEffect(_dashDuration);
+        //_afterImageEffect?.PlayDashEffect(_dashDuration);
 
-        // Génère une impulsion de caméra au début du dash si un CinemachineImpulseSource est attaché
+        // Generate impulse if the player has a CinemachineImpulseSource component
         if (TryGetComponent<CinemachineImpulseSource>(out CinemachineImpulseSource impulseSource))
         {
             impulseSource.GenerateImpulse();

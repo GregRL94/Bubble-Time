@@ -70,6 +70,22 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
     /// <summary>
+    /// Enables or disables player input actions.
+    /// </summary>
+    /// <param name="enable">true to enable player input actions; false to disable them.</param>
+    public void EnablePLayerInputs(bool enable)
+    {
+        if (enable)
+        {
+            _inputActions.Enable();
+        }
+        else
+        {
+            _inputActions.Disable();
+        }
+    }
+
+    /// <summary>
     /// Raises OnAttackPressed event when attack input is pressed, OnAttackReleased when it is released.
     /// </summary>
     /// <param name="context">The input action callback context.</param>
