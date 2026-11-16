@@ -1,0 +1,338 @@
+fileFormatVersion: 2
+guid: 25bf34ac01cf51e4698cd5cdabab7bdc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6470303975285295524
+    second: spritesheet_time_gun_setup_B_0
+  - first:
+      213: 8110064796475806755
+    second: spritesheet_time_gun_setup_B_1
+  - first:
+      213: 890843021425018112
+    second: spritesheet_time_gun_setup_B_2
+  - first:
+      213: 5833020985876404480
+    second: spritesheet_time_gun_setup_B_3
+  - first:
+      213: 3851067507774450989
+    second: spritesheet_time_gun_setup_B_4
+  - first:
+      213: 4672286382956427329
+    second: spritesheet_time_gun_setup_B_5
+  - first:
+      213: 4400199293179999749
+    second: spritesheet_time_gun_setup_B_6
+  - first:
+      213: -1661559671344007462
+    second: spritesheet_time_gun_setup_B_7
+  - first:
+      213: 185388789651974489
+    second: spritesheet_time_gun_setup_B_8
+  - first:
+      213: 5652731722029497662
+    second: spritesheet_time_gun_setup_B_9
+  - first:
+      213: -6717742001984480005
+    second: spritesheet_time_gun_setup_B_10
+  - first:
+      213: 4548926733995634178
+    second: spritesheet_time_gun_setup_B_11
+  - first:
+      213: -7414692877822871581
+    second: spritesheet_time_gun_setup_B_12
+  - first:
+      213: -814682555711548794
+    second: spritesheet_time_gun_setup_B_13
+  - first:
+      213: -1094641636266777365
+    second: spritesheet_time_gun_setup_B_14
+  - first:
+      213: -1034551343392202109
+    second: spritesheet_time_gun_setup_B_15
+  - first:
+      213: -285419591227963481
+    second: spritesheet_time_gun_setup_B_16
+  - first:
+      213: 6825178293790754276
+    second: spritesheet_time_gun_setup_B_17
+  - first:
+      213: 6769481198032426865
+    second: spritesheet_time_gun_setup_B_18
+  - first:
+      213: -2342631564928811233
+    second: spritesheet_time_gun_setup_B_19
+  - first:
+      213: 9127140422308993823
+    second: spritesheet_time_gun_setup_B_20
+  - first:
+      213: 5979422628825200436
+    second: spritesheet_time_gun_setup_B_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: spritesheet_time_gun_setup_B_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c56725cc0dcd436a0800000000000000
+      internalID: -6470303975285295524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_time_gun_setup_B_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3245753a6fcbc8070800000000000000
+      internalID: 8110064796475806755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_time_gun_setup_B_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0058ca21209ec5c00800000000000000
+      internalID: 890843021425018112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_time_gun_setup_B_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 009df869ead03f050800000000000000
+      internalID: 5833020985876404480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_time_gun_setup_B_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2de1f69e7db17530800000000000000
+      internalID: 3851067507774450989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_time_gun_setup_B_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1483301e5bb47d040800000000000000
+      internalID: 4672286382956427329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0de197fe29658c847a65c71dbbae3196
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: 6a62e001f36320b48bc003d604df2864, type: 3}
+      name: Emission
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      spritesheet_time_gun_setup_B_0: -6470303975285295524
+      spritesheet_time_gun_setup_B_1: 8110064796475806755
+      spritesheet_time_gun_setup_B_2: 890843021425018112
+      spritesheet_time_gun_setup_B_3: 5833020985876404480
+      spritesheet_time_gun_setup_B_4: 3851067507774450989
+      spritesheet_time_gun_setup_B_5: 4672286382956427329
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

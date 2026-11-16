@@ -41,5 +41,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: NO_POST_PROCESS
+    uniqueID: 1104908353
+    locked: 0
+  - name: Background
+    uniqueID: 3051474601
+    locked: 0
+  - name: Ground
+    uniqueID: 2779117319
+    locked: 0
+  - name: Player
+    uniqueID: 2496929233
+    locked: 0
+  - name: Foreground
+    uniqueID: 38366379
+    locked: 0
+  - name: Projectiles
+    uniqueID: 908862493
+    locked: 0
+  - name: Effects
+    uniqueID: 2979707189
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -18,6 +18,7 @@ public class PlayerJump : MonoBehaviour, IPlayerMovementComponent
     [SerializeField] private float _coyoteTime = 0.1f;          // can still jump just after leaving a ledge
     [SerializeField] private float _jumpBufferTime = 0.12f;     // jump pressed slightly before landing still counts
 
+    private PlayerMovementController _movementController;
     private Rigidbody2D _targetRb2D;
     private float _baseGravity;
     private float _jumpVelocity;
@@ -28,6 +29,7 @@ public class PlayerJump : MonoBehaviour, IPlayerMovementComponent
 
     public void Initialize(PlayerMovementController movementController)
     {
+        _movementController = movementController;
         _targetRb2D = movementController.PlayerRB2D;
         CalculateJump();
     }
@@ -89,6 +91,7 @@ public class PlayerJump : MonoBehaviour, IPlayerMovementComponent
 
     public void OnJumpStarted()
     {
+        _movementController.PlayerAnimator.SetTrigger("Jump");
         _bufferCounter = _jumpBufferTime;
         jumpHeld = true;
     }
