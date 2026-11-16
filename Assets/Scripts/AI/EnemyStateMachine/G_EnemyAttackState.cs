@@ -9,17 +9,20 @@ public class G_EnemyAttackState: G_EnemyBaseState
         Debug.Log("Entering Attack State");
         if (_enemy == null) { _enemy = stateMachine.Enemy; }
         _enemy.Stop();
-        _nextAttackTimer = 1 / _enemy.Data.AttackSpeed;
+        _nextAttackTimer = 0f;
     }
 
     public override void UpdateState(G_EnemyStateMachine stateMachine)
     {
+        if (_enemy.isAttacking) { return; }
+
         if (_nextAttackTimer > 0f) { _nextAttackTimer -= Time.deltaTime; }
 
         Transform playerTransform;
 
         if (!_enemy.TryDetectPlayer(out playerTransform))
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.AlertState);
             return;
         }
@@ -30,25 +33,22 @@ public class G_EnemyAttackState: G_EnemyBaseState
 
         if (MathUtils.DistanceX(enemyPos, playerPos) > _enemy.AttackRange || MathUtils.DistanceY(enemyPos, playerPos) > _enemy.Data.AttackVerticalTolerance)
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.ChaseState);
             return;
         }
 
         _enemy.FaceDirection(playerDir);
-        TryAttack();
+
+        if (_nextAttackTimer <= 0f)
+        {
+            _enemy.TryAttack();
+            _nextAttackTimer = 1 / _enemy.Data.AttackSpeed;
+        }
     }
 
     public override void ExitState(G_EnemyStateMachine stateMachine)
     {
         Debug.Log("Exiting Attack State");
-    }
-
-    private void TryAttack()
-    {
-        if (_nextAttackTimer <= 0f)
-        {
-            _enemy.PerformAttack();
-            _nextAttackTimer = 1 / _enemy.Data.AttackSpeed;
-        }
     }
 }

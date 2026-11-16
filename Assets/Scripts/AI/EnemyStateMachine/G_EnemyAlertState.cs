@@ -14,6 +14,9 @@ public class G_EnemyAlertState: G_EnemyBaseState
         _alertTimer = _enemy.Data.AlertTime;
         _nextFlipTime = _alertTimer / 2f;
         _hasFlipped = false;
+
+        // STATE TRANSITION //
+        _enemy.AnimatorAI.SetTrigger("Alert");
     }
 
     public override void UpdateState(G_EnemyStateMachine stateMachine)
@@ -22,6 +25,7 @@ public class G_EnemyAlertState: G_EnemyBaseState
 
         if (stateMachine.Enemy.TryDetectPlayer(out _))
         {
+            // STATE TRANSITION //
             stateMachine.ChangeState(stateMachine.ChaseState);
             return;
         }
@@ -30,10 +34,12 @@ public class G_EnemyAlertState: G_EnemyBaseState
         {
             if (stateMachine.Enemy.WaypointsSettings.Waypoints.Length > 0)
             {
+                // STATE TRANSITION //
                 stateMachine.ChangeState(stateMachine.PatrolState);
             }
             else
             {
+                // STATE TRANSITION //
                 stateMachine.ChangeState(stateMachine.IdleState);
             }
             return;
