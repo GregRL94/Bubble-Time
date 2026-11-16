@@ -207,50 +207,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: spritesheet_shoot_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d347d780153699cd0800000000000000
-      internalID: -2550898514242735043
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet_shoot_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a0a5090f1113ba890800000000000000
-      internalID: -7445803605806786038
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -271,8 +227,6 @@ TextureImporter:
     nameFileIdTable:
       spritesheet_shoot_0: 171050967449851016
       spritesheet_shoot_1: -8052793556640409507
-      spritesheet_shoot_2: -2550898514242735043
-      spritesheet_shoot_3: -7445803605806786038
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
