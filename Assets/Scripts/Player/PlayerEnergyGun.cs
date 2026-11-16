@@ -54,6 +54,10 @@ public class PlayerEnergyGun : MonoBehaviour, IPlayerActionComponent
     {
         if (_shootRequested && _canShoot)
         {
+            if (_actionsController.PlayerAnimator) 
+            {
+                _actionsController.PlayerAnimator.SetTrigger("Shoot");
+            }
             ApplyDispersion();
             GameObject projectile = Instantiate(_projectilePrefab, _shootingPoint.position, _shootingPoint.rotation);
             projectile.transform.SetParent(null);

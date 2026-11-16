@@ -8,11 +8,16 @@ using UnityEngine;
 
 public class PlayerActionsController : MonoBehaviour
 {
-    [SerializeField] private PlayerEnergyGun _playerEnergyGun;
+    public Animator PlayerAnimator { get; private set; }
     private PlayerInputHandler _inputHandler;
     private PlayerReticle _playerReticle;
+    private PlayerEnergyGun _playerEnergyGun;
     private bool _subscridedToInputEvents;
 
+    private void Awake()
+    {
+        PlayerAnimator = GetComponent<Animator>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +26,10 @@ public class PlayerActionsController : MonoBehaviour
         if (TryGetActionComponent<PlayerReticle>(out _playerReticle))
         {
             Debug.Log("Reticle component found and initialized.");
+        }
+        if (TryGetActionComponent<PlayerEnergyGun>(out _playerEnergyGun))
+        {
+            Debug.Log("Energy Gun component found and initialized.");
         }
         LockCursor();
         Subscribe();

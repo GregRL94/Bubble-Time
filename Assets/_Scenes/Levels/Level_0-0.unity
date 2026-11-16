@@ -22387,42 +22387,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1231328111730597273, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: <WalkSpeed>k__BackingField
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1831178414832085375, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: _dashDuration
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1831178414832085375, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: _dashSpeedFactor
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2465622469263652637, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: LayerMask.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 2465622469263652637, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: ImpulseDefinition.ImpulseType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2465622469263652637, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: ImpulseDefinition.ImpulseShape
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2465622469263652637, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: ImpulseDefinition.DissipationRate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2465622469263652637, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: ImpulseDefinition.ImpulseDuration
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2465622469263652637, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
-      propertyPath: ImpulseDefinition.DissipationDistance
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5541284485397612514, guid: 32ccae6e2ee0cce428dfedb8a3e048c6, type: 3}
       propertyPath: m_Name
       value: Player

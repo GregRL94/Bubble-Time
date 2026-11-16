@@ -100,7 +100,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4095835519548966520}
-  - component: {fileID: 9086222517883395362}
   m_Layer: 6
   m_Name: Energy Gun
   m_TagString: Untagged
@@ -123,31 +122,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7010108559874600204}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9086222517883395362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3770471668864619511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa742a6fe0ad6741a1261ac14f378dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergyGun
-  _projectilePrefab: {fileID: 9151196252613013535, guid: 00bec6f4fbf6f4c499868d07340239c0, type: 3}
-  _shootingPoint: {fileID: 4095835519548966520}
-  _fireRate: 2
-  _projectileSpeed: 10
-  _projectileDamage: 10
-  _projectileLifetime: 5
-  _projectileImpactLayerMask:
-    serializedVersion: 2
-    m_Bits: 648
-  _angularDispersion: 1
-  _maxAngularDispersion: 2.5
-  _angularDispersionIncrease: 0.5
-  _angularDispersionDecrease: 1
 --- !u!1 &4244885027986917970
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +173,7 @@ GameObject:
   - component: {fileID: 8351408137237703108}
   - component: {fileID: 1831178414832085375}
   - component: {fileID: 4180134919432031746}
+  - component: {fileID: 1273812094925932131}
   - component: {fileID: 6089039690078033790}
   - component: {fileID: 2465622469263652637}
   m_Layer: 6
@@ -417,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95461f100ab3aa54f9d313e792c32ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
-  <WalkSpeed>k__BackingField: 3
+  <WalkSpeed>k__BackingField: 5
   <CrouchSpeed>k__BackingField: 0
   <MaxFallSpeed>k__BackingField: 20
   _groundCheck: {fileID: 8562035073062885180}
@@ -442,7 +417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc779c862adc6245964eecdbad2f872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerActionsController
-  _playerEnergyGun: {fileID: 9086222517883395362}
 --- !u!114 &8351408137237703108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,8 +449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98414a6a6d4e33042abf5e6e8ae50da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
-  _dashSpeedFactor: 10
-  _dashDuration: 0.125
+  _dashSpeedFactor: 7
+  _dashDuration: 0.1
   _dashCooldown: 2
 --- !u!114 &4180134919432031746
 MonoBehaviour:
@@ -498,6 +472,31 @@ MonoBehaviour:
   _aimReticleScreenMargin: 1.5
   _aimReticleKeepOnScreenSpeed: 5
   _aimReticleKeepOnScreenSmoothTime: 1
+--- !u!114 &1273812094925932131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5541284485397612514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa742a6fe0ad6741a1261ac14f378dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergyGun
+  _projectilePrefab: {fileID: 9151196252613013535, guid: 00bec6f4fbf6f4c499868d07340239c0, type: 3}
+  _shootingPoint: {fileID: 4095835519548966520}
+  _fireRate: 2
+  _projectileSpeed: 10
+  _projectileDamage: 10
+  _projectileLifetime: 5
+  _projectileImpactLayerMask:
+    serializedVersion: 2
+    m_Bits: 648
+  _angularDispersion: 1
+  _maxAngularDispersion: 2.5
+  _angularDispersionIncrease: 0.5
+  _angularDispersionDecrease: 1
 --- !u!114 &6089039690078033790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,9 +538,9 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ImpulseDuration: 0.2
-    ImpulseType: 1
-    DissipationRate: 0.15
+    ImpulseDuration: 0.3
+    ImpulseType: 0
+    DissipationRate: 0
     RawSignal: {fileID: 0}
     AmplitudeGain: 1
     FrequencyGain: 1
@@ -568,12 +567,12 @@ MonoBehaviour:
     ImpactRadius: 100
     DirectionMode: 0
     DissipationMode: 2
-    DissipationDistance: 3
+    DissipationDistance: 5
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -1, z: 0}
   LayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
   IgnoreTag: 
   UseImpactDirection: 0
   ScaleImpactWithMass: 0
