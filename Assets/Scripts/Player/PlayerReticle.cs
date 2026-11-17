@@ -19,7 +19,7 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
     private PlayerActionsController _actionsController;
     private Transform _reticleTransform;
     private Vector3 _currentReticleVelocity;
-    private float _offsetAngleDeg = -90f; // Décalage de l'angle pour que le point de tir soit orienté correctement
+    private float _offsetAngleDeg = -90f; // Default offset. Math shenanigans.
 
     /// <summary>
     /// Aims the reticle and gun.
@@ -37,7 +37,7 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
         float[] boundaries = MathUtils.ScreenBoundaries();
         _reticleTransform.Translate(_aimReticleSpeed * Time.deltaTime * aim);
 
-        // Clamp la position du viseur aux limites de l'ecran
+        // Clamp the position of the reticle to the screen boundaries
         _reticleTransform.position = new Vector3(
             Mathf.Clamp(_reticleTransform.position.x, boundaries[0], boundaries[2]),
             Mathf.Clamp(_reticleTransform.position.y, boundaries[1], boundaries[3]),
@@ -48,12 +48,12 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
         {
             if (Vector2.Distance(_reticleTransform.position, transform.position) < _aimReticleMinDistance)
             {
-                _reticleTransform.position = (Vector2)transform.position + aimDirection.normalized * _aimReticleMinDistance; // Empêche le viseur de se rapprocher trop du joueur.
+                _reticleTransform.position = (Vector2)transform.position + aimDirection.normalized * _aimReticleMinDistance; // Keep the reticle at a minimum distance from the player.
             }
 
             if (Vector2.Distance(_reticleTransform.position, transform.position) > _aimReticleMaxDistance)
             {
-                _reticleTransform.position = (Vector2)transform.position + aimDirection.normalized * _aimReticleMaxDistance; // Empêche le viseur de s'éloigner trop du joueur.
+                _reticleTransform.position = (Vector2)transform.position + aimDirection.normalized * _aimReticleMaxDistance; // Keep the reticle from getting too far from the player.
             }
         }
     }
@@ -66,7 +66,7 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
     {
         float[] screenBoundaries = MathUtils.ScreenBoundaries();
 
-        // Définition d'un rectangle idéal dans lequel le viseur doit rester. Garantit que le viseur n'est jamais à moitié hors de l'écran par exemple.
+        // Keep the reticle in the screen boundaries with a margin
         float leftBoundary = screenBoundaries[0] + _aimReticleScreenMargin;
         float rightBoundary = screenBoundaries[2] - _aimReticleScreenMargin;
         float bottomBoundary = screenBoundaries[1] + _aimReticleScreenMargin;
@@ -86,7 +86,7 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
     {
         Vector2 aimDir;
         aimDir = _reticleTransform.position - targetTransform.position;
-        targetTransform.eulerAngles = new Vector3(0f, 0f, MathUtils.DirToAngleRad(aimDir.x, aimDir.y, _offsetAngleDeg)); // Rotation du point de tir selon la direction de visee
+        targetTransform.eulerAngles = new Vector3(0f, 0f, MathUtils.DirToAngleRad(aimDir.x, aimDir.y, _offsetAngleDeg)); // Rotate the gun to face the reticle.
     }
 
     public void Initialize(PlayerActionsController actionsController)
@@ -95,8 +95,8 @@ public class PlayerReticle : MonoBehaviour, IPlayerActionComponent
         _reticleTransform = _aimReticle.transform;
         if (_stabilized)
         {
-            _reticleTransform.position = transform.position + (transform.right * _aimReticleMinDistance); // Positionne le viseur à une distance minimale du joueur.
-            _reticleTransform.SetParent(null); // Détache le viseur du joueur pour qu'il ne suive pas les mouvements du joueur.
+            _reticleTransform.position = transform.position + (transform.right * _aimReticleMinDistance); // Set the reticle at a minimum distance from the player.
+            _reticleTransform.SetParent(null); // Detach the reticle from the player so it doesn't follow the player's movements.
         }
     }
 }
