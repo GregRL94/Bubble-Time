@@ -16,24 +16,21 @@ public class Alarm : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _animator.SetTrigger("Ring");
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player")) { return; }
+        foreach (var turret in _connectedTurrets)
         {
-            foreach (var turret in _connectedTurrets)
-            {
-                turret.Activate();
-            }
+            if (turret != null) { turret.Activate(); }
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         _animator.SetTrigger("Idle");
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player")) { return; }
+        foreach (var turret in _connectedTurrets)
         {
-            foreach (var turret in _connectedTurrets)
-            {
-                turret.Deactivate();
-            }
+            if (turret != null) { turret.Deactivate(); }
         }
     }
 

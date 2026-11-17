@@ -5,6 +5,7 @@ public class PlayerHealth : MonoBehaviour, IHit
 {
     public bool IsDead { get; set; } = false;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
     private int _maxLives => GameManager.Instance.MaxLives;
     private float _respawnTime => GameManager.Instance.RespawnTime;
     private float _gameOverTime => GameManager.Instance.GameOverTime;
@@ -14,6 +15,7 @@ public class PlayerHealth : MonoBehaviour, IHit
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         _currentLives = _maxLives;
         Subscribe(true);
     }
@@ -52,6 +54,7 @@ public class PlayerHealth : MonoBehaviour, IHit
     private void OnRespawn()
     {
         _spriteRenderer.enabled = true;
+        _animator.SetTrigger("Respawn");
         PlayerInputHandler.Instance.EnablePLayerInputs(true);
         IsDead = false;
     }
@@ -59,13 +62,13 @@ public class PlayerHealth : MonoBehaviour, IHit
     IEnumerator Die(float waitForSeconds)
     {
         IsDead = true;
-        _spriteRenderer.enabled = false;
         PlayerInputHandler.Instance.EnablePLayerInputs(false);
-        // TODO:Play Death Animation.
+        _animator.SetTrigger("Die");
         // TODO:Play Death Sound
         yield return new WaitForSeconds(waitForSeconds);
         if (_currentLives >= 0)
         {
+            _spriteRenderer.enabled = false;
             GameManager.Instance.RespawnPlayer();
         }
         else
