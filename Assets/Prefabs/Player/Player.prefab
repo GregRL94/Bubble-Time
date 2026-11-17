@@ -432,7 +432,7 @@ MonoBehaviour:
   _jumpHeight: 2.75
   _timeToApex: 0.35
   _allowDoubleJump: 1
-  _maxJumps: 2
+  _maxJumps: 1
   _fallGravityMultiplier: 1.8
   _cutGravityMultiplier: 3
   _coyoteTime: 0.1
