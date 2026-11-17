@@ -3,33 +3,36 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IHit
 {
-    [Header("Player Lives Settings")]
-    [SerializeField, Tooltip("The maximum number of lives of the player")] private int _maxLives = 3;
-    [SerializeField, Tooltip("The time in seconds before the player is respawned after death")] private float _respawnTime = 2f;
-    [SerializeField, Tooltip("The time in seconds before the GameOver screen is shown after the player lost all lives")] private float _gameOverTime = 3f;
-
     public bool IsDead { get; set; } = false;
+    private SpriteRenderer _spriteRenderer;
+    private int _maxLives => GameManager.Instance.MaxLives;
+    private float _respawnTime => GameManager.Instance.RespawnTime;
+    private float _gameOverTime => GameManager.Instance.GameOverTime;
     private int _currentLives;
-    private bool _isDead;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _currentLives = _maxLives;
+        Subscribe(true);
     }
 
     private void LooseLife()
     {
-        if (_isDead) return;
+        if (IsDead) return;
 
         _currentLives--;
-        if (_currentLives > 0)
+        MainDisplay.Instance.UpdateHealthDisplay(_currentLives);
+        // TODO: Play a sound effect for losing a life
+        // TODO: Play a visual effect for losing a life
+        if (_currentLives >= 0)
         {
             Debug.Log("Lost a life! Remaining lives: " + _currentLives);
             StartCoroutine(Die(_respawnTime));
             return;
         }
-        Debug.Log("No remaining lives! Game Over!");
+        Debug.Log("No remaining lives!");
         StartCoroutine(Die(_gameOverTime));
     }
 
@@ -46,29 +49,52 @@ public class PlayerHealth : MonoBehaviour, IHit
         }
     }
 
+    private void OnRespawn()
+    {
+        _spriteRenderer.enabled = true;
+        PlayerInputHandler.Instance.EnablePLayerInputs(true);
+        IsDead = false;
+    }
+
     IEnumerator Die(float waitForSeconds)
     {
-        _isDead = true;
-        // TODO:Disable Controls
-        // TODO:Play Death Animation
+        IsDead = true;
+        _spriteRenderer.enabled = false;
+        PlayerInputHandler.Instance.EnablePLayerInputs(false);
+        // TODO:Play Death Animation.
         // TODO:Play Death Sound
         yield return new WaitForSeconds(waitForSeconds);
-        if (_currentLives > 0)
+        if (_currentLives >= 0)
         {
-            Debug.Log("Respawn player");
-            // TODO: GameManager Respawn Player
+            GameManager.Instance.RespawnPlayer();
         }
         else
         {
-            Debug.Log("Show Game Over Screen");
-            // TODO: GameManager Show GameOver Screen
+            GameManager.Instance.GameOver();
         }
     }
 
-    public void OnHit()
+    private void Subscribe(bool enable)
     {
-        LooseLife();
+        if (enable)
+        {
+            GameManager.OnPlayerRespawnCompleted += OnRespawn;
+        }
+        else
+        {
+            GameManager.OnPlayerRespawnCompleted -= OnRespawn;
+        }
     }
 
-    public void OnHit(float _) { }
+    private void OnDisable()
+    {
+        Subscribe(false);
+    }
+
+    private void OnDestroy()
+    {
+        Subscribe(false);
+    }
+
+    public void OnHit(float _) { LooseLife(); }
 }

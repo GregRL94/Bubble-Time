@@ -9,7 +9,7 @@ public class DamageByContact : MonoBehaviour
         if (!(((1 << collider.gameObject.layer) & _eligibleLayers) != 0)) { return; }
         if (collider.gameObject.TryGetComponent(out IHit hit))
         {
-            hit.OnHit();
+            hit.OnHit(0f);
         }
     }
 }
