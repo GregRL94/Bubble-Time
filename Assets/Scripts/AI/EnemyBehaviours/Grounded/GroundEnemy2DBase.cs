@@ -195,6 +195,7 @@ public class GroundEnemy2DBase : MonoBehaviour, IHit
 
     public virtual void PerformAttack()
     {
+        Debug.Log("Perform Attack Base");
         isAttacking = false;
     }
 

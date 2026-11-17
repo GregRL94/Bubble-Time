@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +9,8 @@ public class GameManager : MonoBehaviour
     [field:SerializeField, Tooltip("The time in seconds before the GameOver screen is shown after the player lost all lives")] public float GameOverTime { get; private set;} = 3f;
 
     public static Action OnPlayerRespawnCompleted;
+    public static Action OnGameOver;
+    public static Action OnGameRestart;
     public static GameManager Instance { get; private set; }
 
     private GameObject _player;
@@ -30,12 +30,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-    }
-
     public void RespawnPlayer()
     {
         Debug.Log("Respawn player");
@@ -46,6 +40,34 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("Game Over");
+        Time.timeScale = 0f;
+        ShowCursor();
+        OnGameOver?.Invoke();
+    }
+
+    public void RestartGame()
+    {
+        Debug.Log("Restart Game");
+        Time.timeScale = 1f;
+        ShowCursor(false);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quit Game");
+        Application.Quit();
+    }
+
+    public void RegisterPlayer(GameObject player)
+    {
+        _player = player;
+        Debug.Log("Player registered: " + player.name);
+    }
+
+    public void UnregisterPlayer()
+    {
+        _player = null;
     }
 
     public void RegisterLevel(LevelManager level)
@@ -57,5 +79,11 @@ public class GameManager : MonoBehaviour
     public void UnregisterLevel(LevelManager level)
     {
         _currentLevel = null;
+    }
+
+    private void ShowCursor(bool show=true)
+    {
+        Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = show;
     }
 }
