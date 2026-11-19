@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/* TODO: Make this script inherit from a base weapon class, allowing for different types of weapons to be implemented with shared functionality. */
+/* TODO: Make this script inherit from a base weapon class */
 public class PlayerEnergyGun : MonoBehaviour, IPlayerActionComponent
 {
     #region Attributes
@@ -54,14 +54,22 @@ public class PlayerEnergyGun : MonoBehaviour, IPlayerActionComponent
     {
         if (_shootRequested && _canShoot)
         {
-            ApplyDispersion();
-            GameObject projectile = Instantiate(_projectilePrefab, _shootingPoint.position, _shootingPoint.rotation);
-            projectile.transform.SetParent(null);
-            projectile.GetComponent<IProjectile>().SetupProjectile(_projectileSpeed, _projectileDamage, _projectileLifetime, _projectileImpactLayerMask);
-            IncreaseDispersion();
+            if (_actionsController.PlayerAnimator) 
+            {
+                _actionsController.PlayerAnimator.SetTrigger("Shoot");
+            }            
             _timeSinceLastShot = 0f;
             _canShoot = false;
         }
+    }
+
+    public void InstantiateProjectile() 
+    {
+        ApplyDispersion();
+        GameObject projectile = Instantiate(_projectilePrefab, _shootingPoint.position, _shootingPoint.rotation);
+        projectile.transform.SetParent(null);
+        projectile.GetComponent<IProjectile>().SetupProjectile(_projectileSpeed, _projectileDamage, _projectileLifetime, _projectileImpactLayerMask);
+        IncreaseDispersion();
     }
     #endregion Methods
 
@@ -130,13 +138,11 @@ public class PlayerEnergyGun : MonoBehaviour, IPlayerActionComponent
     public void StartShooting()
     {
         _shootRequested = true;
-        Debug.Log("Shoot requested");
         Shoot();
     }
 
     public void StopShooting()
     {
-        Debug.Log("Shoot stopped");
         _shootRequested = false;
     }
     #endregion Input Event Hooks

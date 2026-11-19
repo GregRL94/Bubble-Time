@@ -233,4 +233,14 @@ public class PlayerInputHandler : MonoBehaviour
         _inputActions.Disable();
         Subscribe(false);
     }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+        Subscribe(false);
+        _inputActions.Dispose();
+    }
 }

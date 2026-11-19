@@ -5,6 +5,7 @@ public class PlayerHealth : MonoBehaviour, IHit
 {
     public bool IsDead { get; set; } = false;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
     private int _maxLives => GameManager.Instance.MaxLives;
     private float _respawnTime => GameManager.Instance.RespawnTime;
     private float _gameOverTime => GameManager.Instance.GameOverTime;
@@ -13,10 +14,8 @@ public class PlayerHealth : MonoBehaviour, IHit
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!TryGetComponent(out _spriteRenderer))
-        {
-            Debug.LogError("SpriteRenderer component not found on Player!");
-        }
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         _currentLives = _maxLives;
         Subscribe(true);
     }
@@ -26,15 +25,16 @@ public class PlayerHealth : MonoBehaviour, IHit
         if (IsDead) return;
 
         _currentLives--;
+        MainDisplay.Instance.UpdateHealthDisplay(_currentLives);
         // TODO: Play a sound effect for losing a life
-        // TODO: Play a visual effect for losing a life (e.g., flash the screen, show a UI element, etc.)
-        if (_currentLives > 0)
+        // TODO: Play a visual effect for losing a life
+        if (_currentLives >= 0)
         {
             Debug.Log("Lost a life! Remaining lives: " + _currentLives);
             StartCoroutine(Die(_respawnTime));
             return;
         }
-        Debug.Log("No remaining lives! Game Over!");
+        Debug.Log("No remaining lives!");
         StartCoroutine(Die(_gameOverTime));
     }
 
@@ -54,6 +54,7 @@ public class PlayerHealth : MonoBehaviour, IHit
     private void OnRespawn()
     {
         _spriteRenderer.enabled = true;
+        _animator.SetTrigger("Respawn");
         PlayerInputHandler.Instance.EnablePLayerInputs(true);
         IsDead = false;
     }
@@ -61,13 +62,13 @@ public class PlayerHealth : MonoBehaviour, IHit
     IEnumerator Die(float waitForSeconds)
     {
         IsDead = true;
-        _spriteRenderer.enabled = false;
         PlayerInputHandler.Instance.EnablePLayerInputs(false);
-        // TODO:Play Death Animation. Use body supparts from the object pooler to create a ragdoll effect. Use the RagdollSettings class to configure the ragdoll effect.
+        _animator.SetTrigger("Die");
         // TODO:Play Death Sound
         yield return new WaitForSeconds(waitForSeconds);
         if (_currentLives >= 0)
         {
+            _spriteRenderer.enabled = false;
             GameManager.Instance.RespawnPlayer();
         }
         else

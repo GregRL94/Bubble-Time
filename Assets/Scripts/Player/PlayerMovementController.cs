@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovementController : MonoBehaviour
 {
+    #region Attributes
     [Header("Movement Settings")]
     [field:SerializeField] public float WalkSpeed { get; private set; } = 3.0f;
     [field: SerializeField] public float CrouchSpeed { get; private set; } = 0f;
@@ -18,7 +19,6 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private Transform _wallCheck;
     [SerializeField] private Vector2 _wallCheckSize = new Vector2(0.05f, 0.5f);
     [SerializeField] private LayerMask _wallLayer;
-    // [SerializeField] private PhysicsMaterial2D _wallNoFrictionMaterial;
 
     public Rigidbody2D PlayerRB2D {get; private set;}
     public Animator PlayerAnimator { get; private set; }
@@ -37,7 +37,9 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerDash _playerDash;
     private bool _subscribedToInputEvents;
     private float _facing = 1f; // 1 for right, -1 for left
+    #endregion Attributes
 
+    #region MonoBehaviour Methods
     private void Awake()
     {
         PlayerRB2D = GetComponent<Rigidbody2D>();
@@ -51,6 +53,7 @@ public class PlayerMovementController : MonoBehaviour
         TryGetMovementComponent<PlayerJump>(out _playerJump);
         TryGetMovementComponent<PlayerDash>(out _playerDash);
         Subscribe();
+        GameManager.Instance.RegisterPlayer(gameObject);
         CurrentSpeed = WalkSpeed;
     }
 
@@ -68,7 +71,9 @@ public class PlayerMovementController : MonoBehaviour
         _playerJump?.UpdateGravity();
         PlayerRB2D.linearVelocity = new Vector2(HandleXAxisMovement(), HandleYAxisMovement());
     }
+    #endregion MonoBehaviour Methods
 
+    #region Checks
     private void GroundCheck()
     {
         IsGrounded = Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize, 0f, _groundLayer);
@@ -78,14 +83,9 @@ public class PlayerMovementController : MonoBehaviour
     {
         IsTouchingWall = Physics2D.OverlapBox(_wallCheck.position, _wallCheckSize, 0f, _wallLayer);
     }
+    #endregion Checks
 
-    private void UpdateAnimator()
-    {
-        PlayerAnimator.SetBool("IsGrounded", IsGrounded);
-        PlayerAnimator.SetFloat("SpeedX", Mathf.Abs(PlayerRB2D.linearVelocityX));
-        PlayerAnimator.SetFloat("SpeedY", PlayerRB2D.linearVelocityY);
-    }
-
+    #region Movement Handling
     private float HandleXAxisMovement()
     {
         Vector2 movementInput = _inputHandler.GetMovementInput();
@@ -108,7 +108,30 @@ public class PlayerMovementController : MonoBehaviour
         }
         return velocity_Y;
     }
+    #endregion Movement Handling
 
+    #region Other Methods
+    private void UpdateAnimator()
+    {
+        PlayerAnimator.SetBool("IsGrounded", IsGrounded);
+        PlayerAnimator.SetFloat("SpeedX", Mathf.Abs(PlayerRB2D.linearVelocityX));
+        PlayerAnimator.SetFloat("SpeedY", PlayerRB2D.linearVelocityY);
+    }
+
+    private bool TryGetMovementComponent<T>(out T component) where T : MonoBehaviour, IPlayerMovementComponent
+    {
+        component = GetComponent<T>();
+        if (component == null)
+        {
+            Debug.LogWarning($"{typeof(T).Name} component not found on this GameObject.");
+            return false;
+        }
+        component.Initialize(this);
+        return true;
+    }
+    #endregion Other Methods
+
+    #region Event Subscription
     private void Subscribe(bool subscribe=true)
     {
         if (subscribe)
@@ -140,23 +163,6 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private bool TryGetMovementComponent<T>(out T component) where T : MonoBehaviour, IPlayerMovementComponent
-    {
-        component = GetComponent<T>();
-        if (component == null)
-        {
-            Debug.LogWarning($"{typeof(T).Name} component not found on this GameObject.");
-            return false;
-        }
-        component.Initialize(this);
-        return true;
-    }
-
-    //private void OnEnable()
-    //{
-    //    Subscribe();
-    //}
-
     private void OnDisable()
     {
         if (_subscribedToInputEvents)
@@ -171,8 +177,11 @@ public class PlayerMovementController : MonoBehaviour
         {
             Subscribe(false);
         }
+        GameManager.Instance.UnregisterPlayer();
     }
+    #endregion Event Subscription
 
+    #region Gizmos
     private void OnDrawGizmos()
     {
         if (IsGrounded)
@@ -187,4 +196,5 @@ public class PlayerMovementController : MonoBehaviour
             Gizmos.DrawWireCube(_wallCheck.position, _wallCheckSize);
         }
     }
+    #endregion Gizmos
 }

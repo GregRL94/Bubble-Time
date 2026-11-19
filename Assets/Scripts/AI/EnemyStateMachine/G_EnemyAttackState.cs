@@ -38,6 +38,7 @@ public class G_EnemyAttackState: G_EnemyBaseState
             return;
         }
 
+        _enemy.AnimatorAI.SetTrigger("Alert");
         _enemy.FaceDirection(playerDir);
 
         if (_nextAttackTimer <= 0f)
