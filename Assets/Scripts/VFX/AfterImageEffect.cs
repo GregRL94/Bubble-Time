@@ -61,6 +61,7 @@ public class AfterImageEffect : MonoBehaviour
     {
         for (int i = 0; i < playerRenderers.Length; i++)
         {
+            Debug.Log("Spawning after image for renderer: " + playerRenderers[i].name);
             if (playerRenderers[i] == null || afterImagePrefabs[i] == null) continue;
 
             SpriteRenderer image = Instantiate(afterImagePrefabs[i], transform.position, transform.rotation);

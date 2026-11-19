@@ -47,7 +47,7 @@ public class PlayerDash : MonoBehaviour, IPlayerMovementComponent
         _movementController.PlayerAnimator.SetTrigger("Dash");
 
         // AfterImageEffect
-        //_afterImageEffect?.PlayDashEffect(_dashDuration);
+        _afterImageEffect?.PlayDashEffect(_dashDuration);
 
         // Generate impulse if the player has a CinemachineImpulseSource component
         if (TryGetComponent<CinemachineImpulseSource>(out CinemachineImpulseSource impulseSource))

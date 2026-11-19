@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 4180134919432031746}
   - component: {fileID: 1273812094925932131}
   - component: {fileID: 6089039690078033790}
-  - component: {fileID: 2465622469263652637}
+  - component: {fileID: 796822602814704677}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -512,12 +512,12 @@ MonoBehaviour:
   playerRenderers:
   - {fileID: 7789431806084987267}
   afterImagePrefabs:
-  - {fileID: 7789431806084987267}
-  timeBetweenImages: 0.05
-  imageLifetime: 0.3
-  activePercentOfDash: 0.8
-  afterImageColor: {r: 1, g: 1, b: 1, a: 0.5}
---- !u!114 &2465622469263652637
+  - {fileID: 6053153480561584383, guid: 4bdfadc453902854ba3fc2d20470ff53, type: 3}
+  timeBetweenImages: 0.02
+  imageLifetime: 0.15
+  activePercentOfDash: 1
+  afterImageColor: {r: 1, g: 1, b: 1, a: 0.09803922}
+--- !u!114 &796822602814704677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -526,21 +526,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5541284485397612514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCollisionImpulseSource
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
   ImpulseDefinition:
     ImpulseChannel: 1
-    ImpulseShape: 2
+    ImpulseShape: 4
     CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ImpulseDuration: 0.3
-    ImpulseType: 0
-    DissipationRate: 0
+    ImpulseDuration: 0.1
+    ImpulseType: 1
+    DissipationRate: 0.25
     RawSignal: {fileID: 0}
     AmplitudeGain: 1
     FrequencyGain: 1
@@ -567,16 +567,9 @@ MonoBehaviour:
     ImpactRadius: 100
     DirectionMode: 0
     DissipationMode: 2
-    DissipationDistance: 5
+    DissipationDistance: 10
     PropagationSpeed: 343
-  DefaultVelocity: {x: 0, y: -1, z: 0}
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  IgnoreTag: 
-  UseImpactDirection: 0
-  ScaleImpactWithMass: 0
-  ScaleImpactWithSpeed: 0
+  DefaultVelocity: {x: 0, y: -0.25, z: 0}
 --- !u!1 &8083408905926838175
 GameObject:
   m_ObjectHideFlags: 0
